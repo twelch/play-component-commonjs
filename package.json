@@ -1,0 +1,42 @@
+{
+  "name": "play-component-commonjs",
+  "version": "0.0.1",
+  "description": "Playing with CommonJS UI components with optional jQuery plugin API",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twelch/play-component-commonjs.git"
+  },
+  "author": "Tim Welch",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/twelch/play-component-commonjs/issues"
+  },
+  "homepage": "https://github.com/twelch/play-component-commonjs#readme",
+  "dependencies": {
+    "handlebars": "^4.0.5",
+    "jquery": "^3.1.1"
+  },
+  "devDependencies": {
+    "browserify": "^13.1.1",
+    "minifyify": "^7.3.4",
+    "parcelify": "^2.2.0",
+    "watchify": "^3.7.0"
+  },
+  "browser": {
+    "tipso": "./node_modules/tipso/src/tipso.js"
+  },
+  "style": [
+    "./node_modules/tipso/src/tipso.css"
+  ],
+  "scripts": {
+    "build-dev": "browserify js/index.js --debug --standalone dots > dist/dots.js && parcelify js/index.js -c dist/dots.css",
+    "watch-dev": "watchify js/index.js --debug --standalone dots --outfile dist/dots.js --verbose",
+    "build-min": "browserify js/mapbox-gl.js --debug --plugin [minifyify --map mapbox-gl.js.map --output dist/mapbox-gl.js.map] --standalone mapboxgl > dist/mapbox-gl.js && tap --no-coverage test/build/min.test.js",
+    "start": "NODE_ENV=development budo example/index.js:example/bundle.js --live",
+    "build": "NODE_ENV=production browserify -s mapboxDirections index.js > dist/mapbox-gl-directions.js",
+    "test": "NODE_ENV=test npm run lint && browserify test/index.js | smokestack -b firefox | tap-status",
+    "docs": "documentation build --format=md > API.md",
+    "lint": "eslint --no-eslintrc -c .eslintrc index.js src"
+  }
+}
