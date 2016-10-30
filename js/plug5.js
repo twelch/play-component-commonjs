@@ -5,17 +5,19 @@
  * Licensed under the MIT license
  */
 
-var $ = jQuery = require('jquery');
 var util = require('./util/util');
 var plug4 = require('./plug4');
 
-var Plugin = function( elem, options ){
-  var defaultOptions = {
-    message: "plug5!"
-  };
+var defaultOptions = {
+  message: "plug5!"
+};
+
+var Plugin = function( elem, pluginOptions, extended ){
   var elem = elem;
-  var options = options;
+  // Get data attribute options
   var dataOptions = elem.dataset.pluginOptions ? JSON.parse(elem.dataset.pluginOptions) : undefined;
+  // Merge all options
+  var options = util.extend({}, defaultOptions, pluginOptions, dataOptions);
 
   function init() {
     options = util.extend({}, defaultOptions, options, dataOptions);
@@ -33,14 +35,12 @@ var Plugin = function( elem, options ){
   };
 
   // Extend plug4 object
-  publicApi = util.extend({}, plug4(elem, options), publicApi);
+  publicApi = util.extend({}, plug4(elem, options, true), publicApi);
+
+  if (!extended) {
+    _update();
+  }
   return publicApi;
 }
 
 module.exports = Plugin;
-
-$.fn.plug5 = function(options) {
-  return this.each(function() {
-    new Plugin(this, options).init();
-  });
-};

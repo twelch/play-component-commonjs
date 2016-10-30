@@ -1,17 +1,13 @@
 /*
- * 'Highly configurable' mutable plugin boilerplate
- * Author: @markdalgleish
- * Further changes, comments: @addyosmani
- * Licensed under the MIT license
+ * Plug4 base object
  */
 
-var $ = jQuery = require('jquery');
+'use strict';
+
 var util = require('./util/util');
 
-var pluginName = 'plug4';
 var defaultOptions = {
-  message: "plug4!",
-  extended: false       // Is this plugin being extended by another?
+  message: "plug4!"
 };
 
 var Plugin = function( elem, pluginOptions, extended ){
@@ -40,21 +36,10 @@ var Plugin = function( elem, pluginOptions, extended ){
     console.log(options.message);
   }
 
+  if (!extended) {
+    _update();
+  }
   return publicApi;
 }
 
 module.exports = Plugin;
-
-$.fn[pluginName] = function(options) {
-  return this.each(function() {
-    // Keep plugin reference. Update options if already instantiated for this element
-    var plugin = $.data(this, "plugin_" + pluginName);
-    if (!plugin) {
-      plugin = new Plugin(this, options)        
-    } else {
-      plugin.updateOptions(options);
-    }
-    $.data(this, "plugin_" + pluginName, plugin);
-    return plugin
-  });
-};
