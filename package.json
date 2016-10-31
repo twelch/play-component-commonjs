@@ -19,24 +19,21 @@
   },
   "devDependencies": {
     "browserify": "^13.1.1",
+    "budo": "^9.2.1",
+    "eslint": "^3.9.1",
+    "eslint-watch": "^2.1.14",
     "minifyify": "^7.3.4",
     "parcelify": "^2.2.0",
     "watchify": "^3.7.0"
   },
-  "browser": {
-    "tipso": "./node_modules/tipso/src/tipso.js"
-  },
-  "style": [
-    "./node_modules/tipso/src/tipso.css"
-  ],
   "scripts": {
-    "build-dev": "browserify js/index.js --debug --standalone dots > dist/dots.js && parcelify js/index.js -c dist/dots.css",
-    "watch-dev": "watchify js/index.js --debug --standalone dots --outfile dist/dots.js --verbose",
-    "build-min": "browserify js/mapbox-gl.js --debug --plugin [minifyify --map mapbox-gl.js.map --output dist/mapbox-gl.js.map] --standalone mapboxgl > dist/mapbox-gl.js && tap --no-coverage test/build/min.test.js",
-    "start": "NODE_ENV=development budo example/index.js:example/bundle.js --live",
-    "build": "NODE_ENV=production browserify -s mapboxDirections index.js > dist/mapbox-gl-directions.js",
-    "test": "NODE_ENV=test npm run lint && browserify test/index.js | smokestack -b firefox | tap-status",
-    "docs": "documentation build --format=md > API.md",
-    "lint": "eslint --no-eslintrc -c .eslintrc index.js src"
+    "start": "NODE_ENV=development budo js/index.js:examples/dots.js --live",
+    "build": "npm run build-dev && npm run build-prod && npm run build-prod-jq",
+    "build-dev": "NODE_ENV=development browserify js/index.js --debug --standalone dots > dist/dots-dev.js && parcelify js/index.js -c dist/dots.css",    
+    "build-prod": "NODE_ENV=production browserify js/index.js --external jquery --debug --plugin [minifyify --map dots.js.map --output dist/dots.js.map] --standalone dots > dist/dots.js",
+    "build-prod-jq": "NODE_ENV=production browserify js/index.js --debug --plugin [minifyify --map dots-jq.js.map --output dist/dots-jq.js.map] --standalone dots > dist/dots-jq.js",
+    "lint": "eslint js examples",
+    "lint:fix": "npm run lint -- --fix",
+    "lint:watch": "esw -w js"
   }
 }

@@ -1,38 +1,33 @@
 /*
- * Module pattern 'Highly configurable' mutable plugin boilerplate
- * Author: @markdalgleish
- * Further changes, comments: @addyosmani
- * Licensed under the MIT license
+ * Plug5 module.
+ * @module Plug5 component
  */
+
+'use strict';
 
 var util = require('./util/util');
 var plug4 = require('./plug4');
 
 var defaultOptions = {
-  message: "plug5!"
+  'message': 'plug5!'
 };
 
-var Plugin = function( elem, pluginOptions, extended ){
+var Plug5 = function(elem, pluginOptions, extended) {
   var elem = elem;
   // Get data attribute options
   var dataOptions = elem.dataset.pluginOptions ? JSON.parse(elem.dataset.pluginOptions) : undefined;
   // Merge all options
   var options = util.extend({}, defaultOptions, pluginOptions, dataOptions);
 
-  function init() {
-    options = util.extend({}, defaultOptions, options, dataOptions);
-    _update();
-    return Plugin;
-  }
+  var publicApi = {};
 
+  /** Update the plugin 
+   * @returns {void}
+   */
   function _update() {
     elem.innerHTML = options.message + 'extends ' + publicApi.getBase();
     console.log(options.message);
   }
-
-  var publicApi = {
-    init: init
-  };
 
   // Extend plug4 object
   publicApi = util.extend({}, plug4(elem, options, true), publicApi);
@@ -40,7 +35,8 @@ var Plugin = function( elem, pluginOptions, extended ){
   if (!extended) {
     _update();
   }
+  
   return publicApi;
-}
+};
 
-module.exports = Plugin;
+module.exports = Plug5;

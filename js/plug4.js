@@ -1,5 +1,6 @@
 /*
- * Plug4 base object
+ * Plug4 module.
+ * @module Plug4 component
  */
 
 'use strict';
@@ -7,10 +8,10 @@
 var util = require('./util/util');
 
 var defaultOptions = {
-  message: "plug4!"
+  'message': 'plug4!'
 };
 
-var Plugin = function( elem, pluginOptions, extended ){
+var Plug4 = function(elem, pluginOptions, extended) {
   var elem = elem;
   // Get data attribute options
   var dataOptions = elem.dataset.pluginOptions ? JSON.parse(elem.dataset.pluginOptions) : undefined;
@@ -18,19 +19,29 @@ var Plugin = function( elem, pluginOptions, extended ){
   var options = util.extend({}, defaultOptions, pluginOptions, dataOptions);
 
   var publicApi = {
-    updateOptions: updateOptions,
-    getBase: getBase
+    'updateOptions': updateOptions,
+    'getBase': getBase
   };
 
+  /** Update component options
+   * @param {object} newOptions The updated options
+   * @returns {void}
+   */
   function updateOptions(newOptions) {
     options = util.extend({}, options, newOptions);
     _update();
   }
 
+  /** Returns base message
+   * @returns {string} Message
+   */
   function getBase() {
-    return options.message
+    return options.message;
   }
 
+  /** Updates the component
+   * @returns {void}
+   */
   function _update() {
     elem.innerHTML = options.message;
     console.log(options.message);
@@ -39,7 +50,8 @@ var Plugin = function( elem, pluginOptions, extended ){
   if (!extended) {
     _update();
   }
+  
   return publicApi;
-}
+};
 
-module.exports = Plugin;
+module.exports = Plug4;
