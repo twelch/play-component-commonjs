@@ -10,6 +10,7 @@ Live dev server:
 ~~~~
 npm run start
 ~~~~
+Browse to http://localhost:9966/examples/
 
 Live test:
 ~~~~
