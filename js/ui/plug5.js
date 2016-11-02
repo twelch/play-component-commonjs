@@ -5,7 +5,7 @@
 
 'use strict';
 
-var util = require('./util/util');
+var util = require('../util/extend');
 var plug4 = require('./plug4');
 
 var defaultOptions = {
