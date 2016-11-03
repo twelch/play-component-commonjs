@@ -24,5 +24,3 @@ npm run build
 ~~~~
 
 Generates multiple builds in dist folder including dev, minified production, and minified production with jQuery.  Sourcemaps are included.
-
-Browse to http://localhost:9966/example
