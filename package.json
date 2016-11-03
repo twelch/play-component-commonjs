@@ -35,7 +35,7 @@
     "watchify": "^3.7.0"
   },
   "scripts": {
-    "start": "NODE_ENV=development budo src/index.js:dist/dots.js --live",
+    "start": "NODE_ENV=development budo src/index.js:examples/dots.js --live",
     "build": "npm run build-dev && npm run build-prod && npm run build-prod-jq",
     "build-dev": "NODE_ENV=development browserify src/index.js --debug --standalone dots > dist/dots-dev.js",
     "build-prod": "NODE_ENV=production browserify src/index.js --external jquery --debug --plugin [minifyify --map dots.js.map --output dist/dots.js.map] --standalone dots > dist/dots.js",
