@@ -1,4 +1,4 @@
-var $map = $('#map');
+var $map = $('#map-panel');
 
 $map.glmap();
 

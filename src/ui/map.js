@@ -8,9 +8,13 @@
 var util = require('../util/extend');
 var EventEmitter = require('../util/eventemitter');
 var mapboxgl = require('mapbox-gl');
+var Handlebars = require('handlebars');
+
+// Precompiled via node-hbsfy transform
+var mapTemplate = require('./map.hbs');
 
 var defaultOptions = {
-  'message': 'map!'
+  template: mapTemplate // compiled template
 };
 
 var GLMap = function GLMap(elem, pluginOptions, extended) {
@@ -22,7 +26,7 @@ var GLMap = function GLMap(elem, pluginOptions, extended) {
   // Merge all options
   this.options = util.extend({}, defaultOptions, pluginOptions, dataOptions);
 
-  this._createMap();
+  this.render(this.options.template);
 };
 
 // Add parent objects
@@ -30,11 +34,16 @@ util.extend(GLMap.prototype, EventEmitter);
 // Add Map functions on top
 util.extend(GLMap.prototype, /** @lends Map.prototype */ {
 
-  'foo': function() {
-
+  /*
+   * Render the component
+   * @param {function} compiled Handlebars template
+   */
+  render: function(template) {
+    this.elem.innerHTML = template();
+    this._createMap();
   },
 
-  '_createMap': function() {
+  _createMap: function() {
     mapboxgl.accessToken = 'pk.eyJ1IjoiZW52ZW4iLCJhIjoiY2llcHYwMjk0MDAzYXdqa214eXo1MjY5ayJ9.NRXyS5w86DKA1ZZRgKpfEA';
     var map = new mapboxgl.Map({
       'container': 'map', // container id
@@ -45,16 +54,9 @@ util.extend(GLMap.prototype, /** @lends Map.prototype */ {
     map.on('load', this._mapLoaded.bind(this));
   },
 
-  '_mapLoaded': function() {
+  _mapLoaded: function() {
     this.trigger('map.load');
   },
-
-  /** Update the plugin 
-   * @returns {void}
-   */
-  '_update': function() {
-    
-  }
 });
 
 module.exports = GLMap;

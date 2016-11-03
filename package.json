@@ -2,7 +2,12 @@
   "name": "play-component-commonjs",
   "version": "0.0.1",
   "description": "Playing with CommonJS UI components with optional jQuery plugin API",
-  "main": "index.js",
+  "main": "src/index.js",
+  "browserify": {
+    "transform": [
+      "hbsfy"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/twelch/play-component-commonjs.git"
@@ -13,6 +18,8 @@
     "url": "https://github.com/twelch/play-component-commonjs/issues"
   },
   "homepage": "https://github.com/twelch/play-component-commonjs#readme",
+  "main": "js/index.js",
+  "style": "js/*.css",
   "dependencies": {
     "handlebars": "^4.0.5",
     "jquery": "^3.1.1",
@@ -23,16 +30,16 @@
     "budo": "^9.2.1",
     "eslint": "^3.9.1",
     "eslint-watch": "^2.1.14",
+    "hbsfy": "2.7.0",
     "minifyify": "^7.3.4",
-    "parcelify": "^2.2.0",
     "watchify": "^3.7.0"
   },
   "scripts": {
-    "start": "NODE_ENV=development budo js/index.js:examples/dots.js --live",
+    "start": "NODE_ENV=development budo src/index.js:dist/dots.js --live",
     "build": "npm run build-dev && npm run build-prod && npm run build-prod-jq",
-    "build-dev": "NODE_ENV=development browserify js/index.js --debug --standalone dots > dist/dots-dev.js && parcelify js/index.js -c dist/dots.css",
-    "build-prod": "NODE_ENV=production browserify js/index.js --external jquery --debug --plugin [minifyify --map dots.js.map --output dist/dots.js.map] --standalone dots > dist/dots.js",
-    "build-prod-jq": "NODE_ENV=production browserify js/index.js --debug --plugin [minifyify --map dots-jq.js.map --output dist/dots-jq.js.map] --standalone dots > dist/dots-jq.js",
+    "build-dev": "NODE_ENV=development browserify src/index.js --debug --standalone dots > dist/dots-dev.js",
+    "build-prod": "NODE_ENV=production browserify src/index.js --external jquery --debug --plugin [minifyify --map dots.js.map --output dist/dots.js.map] --standalone dots > dist/dots.js",
+    "build-prod-jq": "NODE_ENV=production browserify src/index.js --debug --plugin [minifyify --map dots-jq.js.map --output dist/dots-jq.js.map] --standalone dots > dist/dots-jq.js",
     "lint": "eslint js examples",
     "lint:fix": "npm run lint -- --fix",
     "lint:watch": "esw -w js"
