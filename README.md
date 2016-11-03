@@ -2,24 +2,27 @@
 Playing with CommonJS UI components with optional jQuery plugin API
 
 ### Usage
+Install dependencies
 ~~~~
 npm install
 ~~~~
 
-Live dev server:
+Start dev server with livereload:
 ~~~~
 npm run start
 ~~~~
 Browse to http://localhost:9966/examples/
 
-Live test:
+ESLint watch:
 ~~~~
 npm run lint:watch
 ~~~~
 
-Build to dist folder
+Generate standalone builds
 ~~~~
 npm run build
 ~~~~
+
+Generates multiple builds in dist folder including dev, minified production, and minified production with jQuery.  Sourcemaps are included.
 
 Browse to http://localhost:9966/example
