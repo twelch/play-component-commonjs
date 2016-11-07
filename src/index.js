@@ -1,7 +1,9 @@
 'use strict';
 
-// Expose jquery as global, browserify attaches to window
+// Expose jQuery as global, browserify attaches to window
 global.$ = global.jQuery = require('jquery');
+// Geocoder plugin expects mapboxgl global variable
+global.mapboxgl = require('mapbox-gl');
 var createPlugin = require('./util/jquery').createPlugin;
 
 var dots = {};
